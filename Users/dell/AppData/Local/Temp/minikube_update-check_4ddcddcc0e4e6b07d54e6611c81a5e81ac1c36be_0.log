@@ -1,0 +1,12 @@
+Log file created at: 2025/11/10 20:59:58
+Running on machine: DESKTOP-LS529SD
+Binary: Built with gc go1.24.6 for windows/amd64
+Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
+I1110 20:59:58.385582   19556 out.go:360] Setting OutFile to fd 3728 ...
+I1110 20:59:58.618530   19556 out.go:408] TERM=,COLORTERM=, which probably does not support color
+I1110 20:59:58.618530   19556 out.go:374] Setting ErrFile to fd 3736...
+I1110 20:59:58.618530   19556 out.go:408] TERM=,COLORTERM=, which probably does not support color
+W1110 20:59:58.684422   19556 root.go:314] Error reading config file at C:\Users\dell\.minikube\config\config.json: open C:\Users\dell\.minikube\config\config.json: The system cannot find the file specified.
+I1110 20:59:58.792925   19556 notify.go:220] Checking for updates...
+I1110 21:00:00.143799   19556 out.go:203] CurrentVersion: v1.37.0
+I1110 21:00:00.147361   19556 out.go:203] LatestVersion: v1.37.0

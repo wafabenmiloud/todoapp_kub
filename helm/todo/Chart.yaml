@@ -1,0 +1,6 @@
+apiVersion: v2
+name: todo
+version: 0.1.0
+description: Helm chart for TODO app (frontend, backend, and MongoDB for minikube)
+type: application
+appVersion: "1.0.0"
