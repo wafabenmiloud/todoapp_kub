@@ -19,4 +19,22 @@ spec:
                 name: {{ include "todo.fullname" . }}-backend
                 port:
                   number: {{ .Values.backend.service.port }}
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "todo.fullname" . }}
+spec:
+  ingressClassName: {{ .Values.ingress.className | quote }}
+  rules:
+    - host: {{ .Values.ingress.host }}
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: {{ include "todo.fullname" . }}-frontend
+                port:
+                  number: {{ .Values.frontend.service.port }}
 {{- end }}

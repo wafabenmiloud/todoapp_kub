@@ -1,0 +1,44 @@
+Log file created at: 2025/11/11 02:43:59
+Running on machine: DESKTOP-LS529SD
+Binary: Built with gc go1.24.6 for windows/amd64
+Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
+I1111 02:43:59.215598   12292 out.go:360] Setting OutFile to fd 108 ...
+I1111 02:43:59.245026   12292 out.go:413] isatty.IsTerminal(108) = true
+I1111 02:43:59.245026   12292 out.go:374] Setting ErrFile to fd 112...
+I1111 02:43:59.245026   12292 out.go:413] isatty.IsTerminal(112) = true
+W1111 02:43:59.260685   12292 root.go:314] Error reading config file at C:\Users\dell\.minikube\config\config.json: open C:\Users\dell\.minikube\config\config.json: The system cannot find the file specified.
+I1111 02:43:59.276908   12292 mustload.go:65] Loading cluster: minikube
+I1111 02:43:59.278015   12292 config.go:182] Loaded profile config "minikube": Driver=docker, ContainerRuntime=docker, KubernetesVersion=v1.34.0
+I1111 02:43:59.279070   12292 addons.go:606] checking whether the cluster is paused
+I1111 02:43:59.279606   12292 config.go:182] Loaded profile config "minikube": Driver=docker, ContainerRuntime=docker, KubernetesVersion=v1.34.0
+I1111 02:43:59.279606   12292 host.go:66] Checking if "minikube" exists ...
+I1111 02:43:59.313125   12292 cli_runner.go:164] Run: docker container inspect minikube --format={{.State.Status}}
+I1111 02:43:59.374056   12292 ssh_runner.go:195] Run: systemctl --version
+I1111 02:43:59.381842   12292 cli_runner.go:164] Run: docker container inspect -f "'{{(index (index .NetworkSettings.Ports "22/tcp") 0).HostPort}}'" minikube
+I1111 02:43:59.434079   12292 sshutil.go:53] new ssh client: &{IP:127.0.0.1 Port:65441 SSHKeyPath:C:\Users\dell\.minikube\machines\minikube\id_rsa Username:docker}
+I1111 02:43:59.562918   12292 ssh_runner.go:195] Run: docker ps --filter status=paused --filter=name=k8s_.*_(kube-system)_ --format={{.ID}}
+I1111 02:43:59.617099   12292 out.go:179] 💡  ingress is an addon maintained by Kubernetes. For any concerns contact minikube on GitHub.
+You can view the list of minikube maintainers at: https://github.com/kubernetes/minikube/blob/master/OWNERS
+I1111 02:43:59.618678   12292 config.go:182] Loaded profile config "minikube": Driver=docker, ContainerRuntime=docker, KubernetesVersion=v1.34.0
+I1111 02:43:59.619222   12292 addons.go:69] Setting ingress=true in profile "minikube"
+I1111 02:43:59.619222   12292 addons.go:238] Setting addon ingress=true in "minikube"
+W1111 02:43:59.619222   12292 addons.go:247] addon ingress should already be in state true
+I1111 02:43:59.619766   12292 host.go:66] Checking if "minikube" exists ...
+I1111 02:43:59.661709   12292 cli_runner.go:164] Run: docker container inspect minikube --format={{.State.Status}}
+I1111 02:43:59.716535   12292 out.go:179] 💡  After the addon is enabled, please run "minikube tunnel" and your ingress resources would be available at "127.0.0.1"
+I1111 02:43:59.717653   12292 out.go:179]     ▪ Using image registry.k8s.io/ingress-nginx/controller:v1.13.2
+I1111 02:43:59.718721   12292 out.go:179]     ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.2
+I1111 02:43:59.720444   12292 out.go:179]     ▪ Using image registry.k8s.io/ingress-nginx/kube-webhook-certgen:v1.6.2
+I1111 02:43:59.722065   12292 addons.go:435] installing /etc/kubernetes/addons/ingress-deploy.yaml
+I1111 02:43:59.722618   12292 ssh_runner.go:362] scp memory --> /etc/kubernetes/addons/ingress-deploy.yaml (16078 bytes)
+I1111 02:43:59.729449   12292 cli_runner.go:164] Run: docker container inspect -f "'{{(index (index .NetworkSettings.Ports "22/tcp") 0).HostPort}}'" minikube
+I1111 02:43:59.776988   12292 sshutil.go:53] new ssh client: &{IP:127.0.0.1 Port:65441 SSHKeyPath:C:\Users\dell\.minikube\machines\minikube\id_rsa Username:docker}
+I1111 02:43:59.913313   12292 ssh_runner.go:195] Run: sudo KUBECONFIG=/var/lib/minikube/kubeconfig /var/lib/minikube/binaries/v1.34.0/kubectl apply -f /etc/kubernetes/addons/ingress-deploy.yaml
+I1111 02:44:01.065435   12292 ssh_runner.go:235] Completed: sudo KUBECONFIG=/var/lib/minikube/kubeconfig /var/lib/minikube/binaries/v1.34.0/kubectl apply -f /etc/kubernetes/addons/ingress-deploy.yaml: (1.1521227s)
+I1111 02:44:01.065435   12292 addons.go:479] Verifying addon ingress=true in "minikube"
+I1111 02:44:01.066705   12292 out.go:179] 🔎  Verifying ingress addon...
+I1111 02:44:01.094269   12292 kapi.go:75] Waiting for pod with label "app.kubernetes.io/name=ingress-nginx" in ns "ingress-nginx" ...
+I1111 02:44:01.120529   12292 kapi.go:86] Found 3 Pods for label selector app.kubernetes.io/name=ingress-nginx
+I1111 02:44:01.120529   12292 kapi.go:107] duration metric: took 26.8369ms to wait for app.kubernetes.io/name=ingress-nginx ...
+I1111 02:44:01.120529   12292 addons.go:201] Writing out "minikube" config to set ingress=true...
+I1111 02:44:01.122156   12292 out.go:179] 🌟  The 'ingress' addon is enabled
