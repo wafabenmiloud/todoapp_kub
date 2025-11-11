@@ -19,6 +19,5 @@ COPY package.json package-lock.json* ./
 RUN npm ci --omit=dev || npm install --omit=dev
 # Copy built app
 COPY --from=build /app/dist ./dist
-COPY ./.env ./
 EXPOSE 4000
 CMD ["node", "dist/main.js"]
