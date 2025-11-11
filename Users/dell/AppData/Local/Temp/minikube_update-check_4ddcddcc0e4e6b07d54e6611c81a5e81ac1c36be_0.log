@@ -22,3 +22,15 @@ W1111 02:24:56.712315    1952 root.go:314] Error reading config file at C:\Users
 I1111 02:24:56.713963    1952 notify.go:220] Checking for updates...
 I1111 02:24:57.291802    1952 out.go:203] CurrentVersion: v1.37.0
 I1111 02:24:57.293408    1952 out.go:203] LatestVersion: v1.37.0
+Log file created at: 2025/11/11 12:15:29
+Running on machine: DESKTOP-LS529SD
+Binary: Built with gc go1.24.6 for windows/amd64
+Log line format: [IWEF]mmdd hh:mm:ss.uuuuuu threadid file:line] msg
+I1111 12:15:29.641522    3836 out.go:360] Setting OutFile to fd 1768 ...
+I1111 12:15:29.744068    3836 out.go:408] TERM=,COLORTERM=, which probably does not support color
+I1111 12:15:29.744068    3836 out.go:374] Setting ErrFile to fd 1976...
+I1111 12:15:29.744068    3836 out.go:408] TERM=,COLORTERM=, which probably does not support color
+W1111 12:15:29.773685    3836 root.go:314] Error reading config file at C:\Users\dell\.minikube\config\config.json: open C:\Users\dell\.minikube\config\config.json: The system cannot find the file specified.
+I1111 12:15:29.841762    3836 notify.go:220] Checking for updates...
+I1111 12:15:30.288742    3836 out.go:203] CurrentVersion: v1.37.0
+I1111 12:15:30.290626    3836 out.go:203] LatestVersion: v1.37.0

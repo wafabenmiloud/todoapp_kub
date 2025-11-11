@@ -1,0 +1,84 @@
+name: CI Kind
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Create kind cluster
+      uses: helm/kind-action@v1.10.0
+      with:
+        cluster_name: todo
+        config: |
+          kind: Cluster
+          apiVersion: kind.x-k8s.io/v1alpha4
+          nodes:
+          - role: control-plane
+            extraPortMappings:
+            - containerPort: 80
+              hostPort: 8080
+              protocol: TCP
+
+    - name: Install kubectl
+      uses: azure/setup-kubectl@v4
+      with:
+        version: v1.30.0
+
+    - name: Install Helm
+      uses: azure/setup-helm@v4
+      with:
+        version: v3.15.2
+
+    - name: Install ingress-nginx for kind
+      run: |
+        kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/kind/deploy.yaml
+        kubectl -n ingress-nginx rollout status deploy/ingress-nginx-controller --timeout=180s
+
+    - name: Build images
+      run: |
+        docker build -t wafabenmiloud/todo-backend:ci-${{ github.sha }} ./backend
+        docker build -t wafabenmiloud/todo-frontend:ci-${{ github.sha }} ./frontend
+
+    - name: Load images into kind
+      run: |
+        kind load docker-image wafabenmiloud/todo-backend:ci-${{ github.sha }} --name todo
+        kind load docker-image wafabenmiloud/todo-frontend:ci-${{ github.sha }} --name todo
+
+    - name: Deploy with Helm
+      run: |
+        helm upgrade --install todo ./helm/todo \
+          --namespace todo --create-namespace \
+          --set image.tag=ci-${{ github.sha }} \
+          --set ingress.host=localhost
+
+    - name: Wait for app ready
+      run: |
+        kubectl -n todo rollout status deploy/todo-backend --timeout=180s
+        kubectl -n todo rollout status deploy/todo-frontend --timeout=180s
+        kubectl -n todo get ingress
+        for i in {1..30}; do
+          if curl -fsS http://localhost:8080/ >/dev/null; then echo Frontend OK; exit 0; fi; sleep 2;
+        done
+        echo "Frontend not ready" >&2; exit 1
+
+    - name: API smoke test
+      run: |
+        curl -i http://localhost:8080/api/tasks || (kubectl -n todo get pods -o wide; exit 1)
+
+    - name: Dump logs on failure
+      if: failure()
+      run: |
+        kubectl -n todo get all
+        kubectl -n todo describe all || true
+        kubectl -n todo logs -l app=todo-backend --tail=200 || true
+        kubectl -n todo logs -l app=todo-frontend --tail=200 || true
