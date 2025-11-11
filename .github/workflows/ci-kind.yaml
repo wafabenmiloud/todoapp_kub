@@ -19,15 +19,7 @@ jobs:
       uses: helm/kind-action@v1.10.0
       with:
         cluster_name: todo
-        config: |
-          kind: Cluster
-          apiVersion: kind.x-k8s.io/v1alpha4
-          nodes:
-          - role: control-plane
-            extraPortMappings:
-            - containerPort: 80
-              hostPort: 8080
-              protocol: TCP
+        config: ./kind-cluster.yaml
 
     - name: Install kubectl
       uses: azure/setup-kubectl@v4
@@ -63,8 +55,8 @@ jobs:
 
     - name: Wait for app ready
       run: |
-        kubectl -n todo rollout status deploy/todo-backend --timeout=180s
-        kubectl -n todo rollout status deploy/todo-frontend --timeout=180s
+        kubectl -n todo rollout status deploy/todo-todo-backend --timeout=180s
+        kubectl -n todo rollout status deploy/todo-todo-frontend --timeout=180s
         kubectl -n todo get ingress
         for i in {1..30}; do
           if curl -fsS http://localhost:8080/ >/dev/null; then echo Frontend OK; exit 0; fi; sleep 2;
