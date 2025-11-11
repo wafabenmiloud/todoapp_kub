@@ -2,24 +2,18 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: {{ include "todo.fullname" . }}
+  name: {{ include "todo.fullname" . }}-api
   annotations:
-    kubernetes.io/ingress.class: {{ .Values.ingress.className | quote }}
+    nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
+  ingressClassName: {{ .Values.ingress.className | quote }}
   rules:
     - host: {{ .Values.ingress.host }}
       http:
         paths:
-          - path: /(.*)
-            pathType: Prefix
-            backend:
-              service:
-                name: {{ include "todo.fullname" . }}-frontend
-                port:
-                  number: {{ .Values.frontend.service.port }}
           - path: /api(/|$)(.*)
-            pathType: Prefix
+            pathType: ImplementationSpecific
             backend:
               service:
                 name: {{ include "todo.fullname" . }}-backend

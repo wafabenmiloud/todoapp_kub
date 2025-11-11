@@ -7,7 +7,7 @@ image:
 
 mongo:
   enabled: true
-  image: bitnami/mongodb:7.0
+  image: mongo:7.0
   auth:
     enabled: false
   service:

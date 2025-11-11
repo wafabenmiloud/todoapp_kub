@@ -20,6 +20,9 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: 3000
+          env:
+            - name: HOST
+              value: "0.0.0.0"
           envFrom:
             - configMapRef:
                 name: {{ include "todo.fullname" . }}-frontend-config
